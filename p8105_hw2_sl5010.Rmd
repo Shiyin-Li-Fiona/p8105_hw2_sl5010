@@ -5,7 +5,23 @@ date: "10/2/2021"
 output: github_document
 ---
 
+## Problem 1
+
 ```{r}
 library(tidyverse)
+library(readxl)
 ```
 
+### Read and clean the Mr. Trash Wheel sheet:
+
+```{r}
+TrasWheel_df = read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",range = "A2:N408")
+TrasWheel_df = janitor::clean_names(TrasWheel_df)
+names(TrasWheel_df)
+TrasWheel_df = filter(TrasWheel_df, !is.na(dumpster))
+mutate(TrasWheel_df, sports_balls = round(sports_balls))
+```
+
+```{r}
+
+```
