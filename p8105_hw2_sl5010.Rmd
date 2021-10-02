@@ -22,6 +22,21 @@ TrasWheel_df = filter(TrasWheel_df, !is.na(dumpster))
 mutate(TrasWheel_df, sports_balls = round(sports_balls))
 ```
 
-```{r}
+### Read and clean precipitation data for 2018 and 2019
 
+```{r}
+TrasWheel_df_18 = 
+  read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",sheet = "2018 Precipitation", range = "A2:B14")%>%
+  filter(!is.na(Total))%>%
+  mutate(year = 2018)
+
+TrasWheel_df_19= 
+  read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",sheet = "2019 Precipitation", range = "A2:B14")%>%
+  filter(!is.na(Total))%>%
+  mutate(year = 2019)
+
+TrasWheel_df_1819 = full_join(TrasWheel_df_18, TrasWheel_df_19)%>%
+  mutate(Month = month.name[Month])
+
+TrasWheel_df_1819
 ```
