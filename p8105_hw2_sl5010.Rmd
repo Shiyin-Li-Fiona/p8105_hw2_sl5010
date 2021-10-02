@@ -18,8 +18,10 @@ library(readxl)
 TrasWheel_df = read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",range = "A2:N408")
 TrasWheel_df = janitor::clean_names(TrasWheel_df)
 names(TrasWheel_df)
-TrasWheel_df = filter(TrasWheel_df, !is.na(dumpster))
-mutate(TrasWheel_df, sports_balls = round(sports_balls))
+TrasWheel_df = filter(TrasWheel_df, !is.na(dumpster))%>%
+mutate(sports_balls = round(sports_balls))
+TrasWheel_df
+
 ```
 
 ### Read and clean precipitation data for 2018 and 2019
@@ -40,3 +42,18 @@ TrasWheel_df_1819 = full_join(TrasWheel_df_18, TrasWheel_df_19)%>%
 
 TrasWheel_df_1819
 ```
+### Write a paragraph about these data
+```{r}
+skimr::skim(TrasWheel_df)
+skimr::skim(TrasWheel_df_1819)
+median =
+  filter(TrasWheel_df, year == 2019)%>%
+  pull(sports_balls)%>%
+  median()
+median
+
+```
+
+the number of observations in TrasWheel_df dataset is 344, and that in TrasWheel_df_1819 is 18. Key variables of TrasWheel_df is sports_balls, and key variables of TrasWheel_df_1819 is Total. For available data, the total precipitation in 2018 is 70.33, and the median number of sports balls in a dumpster in 2019 is 8.5.
+
+
