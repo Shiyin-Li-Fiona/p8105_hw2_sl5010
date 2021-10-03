@@ -82,4 +82,19 @@ snp_df =
   mutate(month = month.name[month])
 snp_df  
 ```
+### Third, tidy the unemployment data so that it can be merged with the previous datasets.
+
+```{r}
+unemployment_df = 
+  read.csv(file = "./data/unemployment.csv")%>%
+  pivot_longer(
+    Jan:Dec,
+    names_to = "month", 
+    values_to = "unemployment")
+ unemployment_df$month = match(unemployment_df$month,month.abb)
+  unemployment_df$month = month.name[unemployment_df$month]
+
+unemployment_df
+```
+
 
