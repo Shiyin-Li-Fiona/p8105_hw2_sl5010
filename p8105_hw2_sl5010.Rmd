@@ -56,4 +56,30 @@ median
 
 the number of observations in TrasWheel_df dataset is 344, and that in TrasWheel_df_1819 is 18. Key variables of TrasWheel_df is sports_balls, and key variables of TrasWheel_df_1819 is Total. For available data, the total precipitation in 2018 is 70.33, and the median number of sports balls in a dumpster in 2019 is 8.5.
 
+## Problem 2
+
+### clean the data in pols-month.csv.
+
+```{r}
+pols_month_df = 
+  read.csv(file = "./data/pols-month.csv")%>%
+  separate(mon, into = c("year", "month", "day"), sep ="-")%>%
+  mutate(month = as.numeric(month))%>%
+  mutate(month = month.name[month])%>%
+  select(-day, -prez_gop, -prez_dem)%>%
+  pivot_longer(
+    gov_gop:rep_dem,
+    names_to = "prez", 
+    values_to = "president")
+```
+### Second, clean the data in snp.csv using a similar process to the above.
+
+```{r}
+snp_df = 
+  read.csv(file = "./data/snp.csv")%>%
+  separate(date, into = c("year", "month", "day"), sep ="/")%>%
+  mutate(month = as.numeric(month))%>%
+  mutate(month = month.name[month])
+snp_df  
+```
 
