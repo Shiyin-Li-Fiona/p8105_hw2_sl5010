@@ -92,6 +92,7 @@ snp_df =
     if (snp_df$year[i] > 15) {snp_df$year[i] = snp_df$year[i]+1900}
     else {snp_df$year[i] = snp_df$year[i]+2000}
   }
+snp_df = arrange(snp_df, year)
   
 snp_df  
 ```
@@ -145,5 +146,9 @@ For unemployment_df, the dimension is (816,3), range of years is (1948,2015), an
 For final_data, the dimension is (4932,6), range of years is (1947,2015), and name of key variable is "prez", "president", "close", "unemployment".
 
 ## Problem 3
+
+```{r}
+
+```
 
 
