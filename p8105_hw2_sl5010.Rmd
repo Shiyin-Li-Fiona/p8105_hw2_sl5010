@@ -79,7 +79,8 @@ snp_df =
   read.csv(file = "./data/snp.csv")%>%
   separate(date, into = c("year", "month", "day"), sep ="/")%>%
   mutate(month = as.numeric(month))%>%
-  mutate(month = month.name[month])
+  mutate(month = month.name[month])%>%
+  select(-day)
 snp_df  
 ```
 ### Third, tidy the unemployment data so that it can be merged with the previous datasets.
@@ -96,5 +97,10 @@ unemployment_df =
 
 unemployment_df
 ```
-
+### Join the datasets by merging snp into pols, and merging unemployment into the result.
+```{r}
+final_data = 
+   left_join(pols_month_df,snp_df)
+final_data
+```
 
