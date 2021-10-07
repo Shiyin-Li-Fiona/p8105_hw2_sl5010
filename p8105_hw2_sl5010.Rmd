@@ -70,12 +70,16 @@ pols_month_df =
   separate(mon, into = c("year", "month", "day"), sep ="-") %>%
   mutate(month = as.numeric(month)) %>%
   mutate(month = month.name[month]) %>%
-  select(-day, -prez_gop, -prez_dem) %>%
+  select(-day) %>%
+  rename(republic = prez_gop, democratic = prez_dem) %>%
   pivot_longer(
-    gov_gop:rep_dem,
-    names_to = "prez", 
-    values_to = "president") %>%
-  mutate(year = as.numeric(year))
+    c(republic,democratic),
+    names_to = "president", 
+    values_to = "number") %>%
+  mutate(year = as.numeric(year)) %>%
+  filter(number != 0) %>%
+  select(-number) 
+
 pols_month_df
 ```
 ### Second, clean the data in snp.csv using a similar process to the above.
