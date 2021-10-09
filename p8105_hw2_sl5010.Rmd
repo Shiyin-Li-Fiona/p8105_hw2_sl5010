@@ -15,7 +15,7 @@ library(readxl)
 ### Read and clean the Mr. Trash Wheel sheet:
 
 ```{r}
-TrasWheel_df = read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",range = "A2:N408")
+TrasWheel_df = read_excel("Data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx",range = "A2:N534")
 
 TrasWheel_df = janitor::clean_names(TrasWheel_df)
 
@@ -31,13 +31,13 @@ TrasWheel_df
 
 ```{r}
 TrasWheel_df_18 = 
-  read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", 
+  read_excel("Data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", 
              sheet = "2018 Precipitation", range = "A2:B14") %>%
   filter(!is.na(Total)) %>%
   mutate(year = 2018)
 
 TrasWheel_df_19= 
-  read_excel("Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx", sheet = "2019 Precipitation", range = "A2:B14") %>%
+  read_excel("Data/Trash-Wheel-Collection-Totals-7-2020-2.xlsx", sheet = "2019 Precipitation", range = "A2:B14") %>%
   filter(!is.na(Total)) %>%
   mutate(year = 2019)
 
@@ -58,7 +58,7 @@ median
 
 ```
 
-the number of observations in TrasWheel_df dataset is 344, and that in TrasWheel_df_1819 is 18. Key variables of TrasWheel_df is sports_balls, and key variables of TrasWheel_df_1819 is Total. For available data, the total precipitation in 2018 is 70.33, and the median number of sports balls in a dumpster in 2019 is 8.5.
+the number of observations in TrasWheel_df dataset is 453, and that in TrasWheel_df_1819 is 24. Key variables of TrasWheel_df is sports_balls, and key variables of TrasWheel_df_1819 is Total. For available data, the total precipitation in 2018 is 70.33, and the median number of sports balls in a dumpster in 2019 is 9.
 
 ## Problem 2
 
@@ -79,7 +79,6 @@ pols_month_df =
   mutate(year = as.numeric(year)) %>%
   filter(number != 0) %>%
   select(-number) 
-
 pols_month_df
 ```
 ### Second, clean the data in snp.csv using a similar process to the above.
@@ -97,7 +96,6 @@ snp_df =
     else {snp_df$year[i] = snp_df$year[i]+2000}
   }
 snp_df = arrange(snp_df, year)
-  
 snp_df  
 ```
 ### Third, tidy the unemployment data so that it can be merged with the previous datasets.
@@ -113,7 +111,6 @@ unemployment_df =
   rename(year = Year)
  unemployment_df$month = match(unemployment_df$month,month.abb)
   unemployment_df$month = month.name[unemployment_df$month]
-
 unemployment_df
 ```
 ### Join the datasets by merging snp into pols, and merging unemployment into the result.
@@ -121,6 +118,7 @@ unemployment_df
 final_data = 
    left_join(pols_month_df,snp_df, by = c("month","year")) %>%
    left_join(unemployment_df, by = c("month","year"))
+
 final_data
 ```
 
@@ -205,6 +203,7 @@ plot_df =
   Popular_Baby_Names_df  %>%
   filter(gender == "MALE" & ethnicity == "WHITE NON HISPANIC" & year_of_birth == 2016)
 
-ggplot(plot_df, aes(x = rank, y = count)) + 
+ggplot(plot_df, aes(x = rank, y = count))+
+  labs(title = " the relationship between number of children with a name and the rank in popularity of that name") + 
   geom_point()
 ```
